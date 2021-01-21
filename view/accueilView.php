@@ -11,11 +11,11 @@
 
 <?php
 //Pour chaque produits, crée le code HTML suivant. La variables $produits provient du controleur et est un tableau d'objet de type Produit.
-foreach ($produits as $produit){ ?>
+foreach ($produits as $prod){ ?>
     <div>
         <?php //htmlspecialchars() permet de convertir les caractères HTML en caractère encodé ?>
-        <h3> <?= htmlspecialchars($produit->get_produit()) ?> </h3>        
-        <p><a href="index.php?action=produit&amp;id=<?= $produit->get_id_produit() ?>">Voir les détails</a></p>        
+        <h3> <?= htmlspecialchars($prod->get_produit()) ?> </h3>        
+        <p><a href="index.php?action=produit&amp;id=<?= $prod->get_id_produit() ?>">Voir les détails</a></p>        
     </div>
 <?php } ?>
 
