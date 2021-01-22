@@ -23,11 +23,6 @@ function listProduitCategorie()
     $produitManager = new ProduitManager();
     $produits = $produitManager->getProduitCategorie($_GET['id']);   
 
-    // Debugging du contenu de l'array produits
-    /*echo "<pre>";
-    print_r($produits);
-    echo "</pre>";*/
-
     $categorie = $produits[0]->get_categorie();
 
     require('view/produitsView.php');
