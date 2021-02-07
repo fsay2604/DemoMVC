@@ -40,4 +40,9 @@ function checkTokenInscription($token)
     $userController = new UtilisateurManager;
     $userController->checkTokenInscription($token);
 }
-?>
+
+function checkAutologin()
+{
+    $userManager = new UtilisateurManager;
+    $userManager->verify_autoLogin();
+}

@@ -167,7 +167,7 @@ class UtilisateurManager extends Manager
             else // si la date d'aujourdhui est superieur a la date d'expiration du cookie
             {
                 // update est_valide de la table autoLogin pour 0
-                disable_autologin();
+                $this->disable_autologin();
                 
                 // Redirection
                 Header("Location: http://localhost/mvc/");
@@ -260,7 +260,3 @@ class UtilisateurManager extends Manager
         }
     }
 }
-
-?>
-
-

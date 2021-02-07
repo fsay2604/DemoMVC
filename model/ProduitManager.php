@@ -16,7 +16,7 @@ class ProduitManager extends Manager
 
         $produits = array();
 
-        while($data = $req->fetch()){
+        while ($data = $req->fetch()) {
             array_push($produits, new Produit($data));
         }
 
@@ -37,13 +37,12 @@ class ProduitManager extends Manager
     public function getProduitCategorie($idCategorie)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('SELECT p.*, categorie FROM tbl_produit AS p INNER JOIN tbl_categorie AS c ON p.id_categorie = c.id_categorie WHERE c.id_categorie = ?'); 
+        $req = $db->prepare('SELECT p.*, categorie FROM tbl_produit AS p INNER JOIN tbl_categorie AS c ON p.id_categorie = c.id_categorie WHERE c.id_categorie = ?');
         $req->execute(array($idCategorie));
 
         $produits = array();
 
-        while($data = $req->fetch())
-        {
+        while ($data = $req->fetch()) {
             array_push($produits, new Produit($data));
         }
 
@@ -61,7 +60,7 @@ class ProduitManager extends Manager
     {
         $db = $this->dbConnect();
         echo "$id_categorie , $produit, $description";
-        $req = $db->prepare('INSERT INTO tbl_produit(id_categorie, produit, description) VALUES (?,?,?)'); 
+        $req = $db->prepare('INSERT INTO tbl_produit(id_categorie, produit, description) VALUES (?,?,?)');
         $req->execute(array($id_categorie, $produit, $description));
         $req->closeCursor();
     }
@@ -73,7 +72,7 @@ class ProduitManager extends Manager
     public function delete($id_produit)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('DELETE FROM tbl_produit WHERE id_produit = ?'); 
+        $req = $db->prepare('DELETE FROM tbl_produit WHERE id_produit = ?');
         $req->execute(array($id_produit));
         $req->closeCursor();
     }
