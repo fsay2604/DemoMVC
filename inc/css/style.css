@@ -7,3 +7,19 @@ nav li {
     width:25%;
     margin-right:20px; 
 }
+
+h1, h3{
+    display:inline-block;
+    margin-right:25px;
+}
+
+input[type='image']
+{
+    border:1px solid gray;
+    border-radius: 5px;
+    padding:1px;
+}
+
+.hidden{
+    display:none;
+}

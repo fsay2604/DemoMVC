@@ -6,6 +6,7 @@
 require_once("model/Manager.php");
 require_once("model/Produit.php");
 
+
 class ProduitManager extends Manager
 {
     public function getProduits()
@@ -50,4 +51,30 @@ class ProduitManager extends Manager
         return $produits;
     }
 
+    /**
+     * Ajoute un produit dans la base de donnee
+     * $id_categorie est l'id de la categorie du produit a ajouter.
+     * $produit est le nom du produit
+     * $description est la description du produit.
+     */
+    public function add($id_categorie, $produit, $description)
+    {
+        $db = $this->dbConnect();
+        echo "$id_categorie , $produit, $description";
+        $req = $db->prepare('INSERT INTO tbl_produit(id_categorie, produit, description) VALUES (?,?,?)'); 
+        $req->execute(array($id_categorie, $produit, $description));
+        $req->closeCursor();
+    }
+
+    /**
+     * Supprime un enregistrement dans la base de donnee.
+     * $id_produit est le id du produit a supprimer.
+     */
+    public function delete($id_produit)
+    {
+        $db = $this->dbConnect();
+        $req = $db->prepare('DELETE FROM tbl_produit WHERE id_produit = ?'); 
+        $req->execute(array($id_produit));
+        $req->closeCursor();
+    }
 }

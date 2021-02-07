@@ -9,3 +9,11 @@ function listCategories()
 
     require('view/categoriesView.php');
 }
+
+function getCategories()
+{
+    $categorieManager = new CategorieManager();
+    $categories = $categorieManager->getCategories();
+
+    return $categories;
+}

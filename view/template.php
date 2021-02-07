@@ -8,8 +8,24 @@
 ?>
 
 <?php
+    // Verifie si la session est encore active
+    // METTRE DANS L'INDEX ET UTILISER LE CONTROLLER
+    if(!isset($_SESSION['courriel']))
+    {
+        // Sinon on regarde le cookie autologin
+        if(isset($_COOKIE['Autologin']) && isset($_COOKIE['UserId']))
+        {
+            require_once('model/UtilisateurManager.php');
+            $user = new UtilisateurManager;
+            $user->verify_autoLogin();
+        }
+    }
+
+    // Impression de la salutation si une session est active
     if(isset($_SESSION['courriel']))
         echo "<h2>Bienvenue " . $_SESSION['courriel'] . "</h2> <br>";
+
+
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +44,18 @@
             <ul>
                 <li><a href="index.php">Accueil</a></li>
                 <li><a href="produits">Les produits</a></li>
-                <li><a href="connexion">Connexion</a></li>
+                <?php
+                    if(isset($_SESSION['courriel']))
+                    {
+                        echo '<a href="index.php?action=logout" onclick="signOut();">Sign out</a>';
+                    }
+                    else
+                    {
+                        echo '<li><a href="inscription">Inscription</a></li>';
+                        echo '<li><a href="connexion">Connexion</a></li>';  
+                    }
+                        
+                ?>
             </ul>
         </nav>
         <?= $content ?>
