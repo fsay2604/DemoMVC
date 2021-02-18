@@ -5,7 +5,6 @@ session_start();
 if (!isset($_SESSION['courriel'])) {
     // Sinon on regarde le cookie autologin
     if (isset($_COOKIE['Autologin']) && isset($_COOKIE['UserId'])) {
-        // require_once('model/UtilisateurManager.php');
         require_once('controller/controllerUtilisateur.php');
         checkAutologin();
     }

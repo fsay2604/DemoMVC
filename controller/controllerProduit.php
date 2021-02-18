@@ -2,7 +2,7 @@
 
 require('model/ProduitManager.php');
 
-function listProduits()
+function listProduits($api_call = false)
 {
     $produitManager = new ProduitManager();
     $produits = $produitManager->getProduits();
@@ -10,21 +10,33 @@ function listProduits()
     require('controller/controllerCategorie.php');
     $categories = getCategories();
 
-    require('view/produitsView.php');
+    if ($api_call == false)
+        require('view/produitsView.php');
+    else
+    {
+        $SerializeProducts = array();
+        foreach ($produits as $p){
+            array_push($SerializeProducts,$p->jsonSerialize());
+        }
+        return json_encode($SerializeProducts);
+    }
 }
 
-function produit()
+function produit($api_call = false)
 {
     $produitManager = new ProduitManager();
-    $produit = $produitManager->getProduit($_GET['id']);
+    $produit = $produitManager->getProduit($_REQUEST['id']);
 
-    require('view/produitView.php');
+    if($api_call == false)
+        require('view/produitView.php');
+    else
+        return json_encode($produit->jsonSerialize());
 }
 
 function listProduitCategorie()
 {
     $produitManager = new ProduitManager();
-    $produits = $produitManager->getProduitCategorie($_GET['id']);
+    $produits = $produitManager->getProduitCategorie($_REQUEST['id']);
 
     $categorie = $produits[0]->get_categorie();
 

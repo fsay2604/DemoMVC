@@ -59,7 +59,6 @@ class ProduitManager extends Manager
     public function add($id_categorie, $produit, $description)
     {
         $db = $this->dbConnect();
-        echo "$id_categorie , $produit, $description";
         $req = $db->prepare('INSERT INTO tbl_produit(id_categorie, produit, description) VALUES (?,?,?)');
         $req->execute(array($id_categorie, $produit, $description));
         $req->closeCursor();
