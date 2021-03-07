@@ -11,14 +11,14 @@ if(isset($_REQUEST['err']))
 <h1>Se connecter</h1>
 
 <form action="../mvc/index.php" method="post">
-    <label for="courriel">Courriel:</label> <input type="email" autocomplete="username" name="courriel" id="courriel" placeholder="example@gmail.com">
+    <label for="courriel"><?= _('Courriel:')?></label> <input type="email" autocomplete="username" name="courriel" id="courriel" placeholder="example@gmail.com">
     <br>
-    <label for="passwd">Mot de passe:</label>   <input type="password"  autocomplete="current-password" name="passwd" id="passwd">
+    <label for="passwd"><?= _("Mot de passe:")?></label>   <input type="password"  autocomplete="current-password" name="passwd" id="passwd">
     <br>
-    <label for="rememberMe">Se souvenir de moi</label> <input type="checkbox" name="rememberMe" id="rememberMe">
+    <label for="rememberMe"><?= _("Se souvenir de moi") ?></label> <input type="checkbox" name="rememberMe" id="rememberMe">
     <br>
     <input type="hidden" name="action" value="authentifier">
-    <button type="submit"><span>Se connecter</span></button>
+    <button type="submit"><span><?= _("Se connecter")?></span></button>
 </form>
 <div class="g-signin2" data-onsuccess="onSignIn"></div>
 

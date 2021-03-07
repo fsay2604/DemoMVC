@@ -1,5 +1,73 @@
+
+
 <?php
 session_start();
+// Gestion de la langues
+if (isset($_REQUEST['lang'])) {
+    switch ($_REQUEST['lang']) {
+        case "fr_CA":
+            $_SESSION['lang'] = "fr_CA";
+            break;
+        case "en_CA":
+            $_SESSION['lang'] = "en_CA";
+            break;
+        case "pt_BR":
+            $_SESSION['lang'] = "pt_BR";
+            break;
+        default:
+            $_SESSION['lang'] = "en_CA";
+    } //switch ends here
+}
+if (!isset($_SESSION['lang']))   // met en francais si la lang n'existe pas.
+    $_SESSION['lang'] = "en_US";
+
+//Chemin vers la racine du site Web
+define('PROJECT_DIR', realpath('./'));
+
+// Chemin vers le dossier qui contient les traductions (ici /locale)
+define('LOCALE_DIR', PROJECT_DIR . '/locale');
+
+//Langue par défaut
+define('DEFAULT_LOCALE', 'en_CA');
+
+// Require vers la librairie
+require_once('./lib/gettext/gettext.inc');
+
+//Déterminer la langue à utiliser. (ici on devrait déterminer quelle langue on souhaite utiliser)
+$locale = $_SESSION['lang'];
+
+//Assigner la langue aux paramètres
+T_setlocale(LC_MESSAGES, $locale);
+
+//Quel est le nom du fichier de traduction (.mo)
+$domain = 'trad';
+bindtextdomain($domain, LOCALE_DIR);
+
+//Détermination de l'encodage
+$encoding = 'UTF-8';
+if (function_exists('bind_textdomain_codeset'))
+    bind_textdomain_codeset($domain, $encoding);
+
+//Application du dossier contenant la traduction
+textdomain($domain);
+
+// Fin des configurations.
+
+//Pour gérer les pluriels !
+// Variable qui déterminera si c'est singulier ou pluriel.
+//$qt = 3;
+
+//ngettext permet de gérer le singulier et pluriel,
+// 1er argument => version singulier,
+// 2e argument => version pluriel
+// 3e argument => le nombre qui permet d'indiquer quelle version prendre
+
+//sprintf permet de formater une chaine (justification, remplacer des paramètres). 
+// Pour indiquer l'emplacement d'un nombre entier il faut mettre %d dans la chaine.
+// les arguments 2 et + sont les valeurs pour remplacer les "tags" tel que %d
+
+//echo sprintf(ngettext("%d commentaire", "%d commentaires", $qt), $qt);
+
 
 // Verifie si la session est encore active
 if (!isset($_SESSION['courriel'])) {

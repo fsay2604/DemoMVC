@@ -8,8 +8,16 @@ class Categorie
     public function __construct($params = array()){
   
         foreach($params as $k => $v){
-
             $methodName = "set_" . $k;
+
+            // Pour appeler la bonne methode peut importe la langue
+            if ($methodName == "set_produit_fr" || $methodName == "set_produit_en" || $methodName == "set_produit_pt")
+                $methodName = "set_produit";
+            else if ($methodName == "set_description_fr" || $methodName == "set_description_en" || $methodName == "set_description_pt")
+                $methodName = "set_description";
+            else if ($methodName == "set_categorie_fr" || $methodName == "set_categorie_en" || $methodName == "set_categorie_pt")
+                $methodName = "set_categorie";
+
             if(method_exists($this, $methodName)) {
                 $this->$methodName($v);
             }   

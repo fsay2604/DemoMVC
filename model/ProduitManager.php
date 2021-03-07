@@ -6,42 +6,78 @@
 require_once("model/Manager.php");
 require_once("model/Produit.php");
 
-
 class ProduitManager extends Manager
 {
     public function getProduits()
     {
         $db = $this->dbConnect();
-        $req = $db->query('SELECT * FROM tbl_produit ORDER BY id_produit');
+        // Creation de la requete en fonction de la langue
+        switch($_SESSION['lang'])
+        {
+            case "fr_CA":
+                $req = $db->prepare('SELECT id_produit, id_categorie, produit_fr, description_fr FROM tbl_produit ORDER BY id_produit');
+                break;
+            case "en_CA":
+                $req = $db->prepare('SELECT id_produit, id_categorie, produit_en, description_en FROM tbl_produit ORDER BY id_produit');
+                break;
+            case "pt_BR":
+                $req = $db->prepare('SELECT id_produit, id_categorie, produit_pt, description_pt FROM tbl_produit ORDER BY id_produit');
+                break;
+            default:
+                $req = $db->prepare('SELECT id_produit, id_categorie, produit_en, description_en FROM tbl_produit ORDER BY id_produit');
+        }
+        $req->execute(array());
 
         $produits = array();
-
         while ($data = $req->fetch()) {
             array_push($produits, new Produit($data));
         }
 
         $req->closeCursor();
         return $produits;
-    }
+    }// function ends here
 
     public function getProduit($produitId)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('SELECT p.*, categorie FROM tbl_produit AS p INNER JOIN tbl_categorie AS c ON p.id_categorie = c.id_categorie WHERE id_produit = ?');
+        // Creation de la requete en fonction de la langue
+        switch ($_SESSION['lang']) {
+            case "fr_CA":
+                $req = $db->prepare('SELECT p.id_produit, p.id_categorie, p.produit_fr, p.description_fr, c.categorie_fr FROM tbl_produit AS p INNER JOIN tbl_categorie AS c ON p.id_categorie = c.id_categorie WHERE id_produit = ?');
+                break;
+            case "en_CA":
+                $req = $db->prepare('SELECT p.id_produit, p.id_categorie, p.produit_en, p.description_en, c.categorie_en FROM tbl_produit AS p INNER JOIN tbl_categorie AS c ON p.id_categorie = c.id_categorie WHERE id_produit = ?');
+                break;
+            case "pt_BR":
+                $req = $db->prepare('SELECT p.id_produit, p.id_categorie, p.produit_pt, p.description_pt, c.categorie_pt FROM tbl_produit AS p INNER JOIN tbl_categorie AS c ON p.id_categorie = c.id_categorie WHERE id_produit = ?');
+                break;
+            default:
+                $req = $db->prepare('SELECT p.id_produit, p.id_categorie, p.produit_en, p.description_en, c.categorie_en FROM tbl_produit AS p INNER JOIN tbl_categorie AS c ON p.id_categorie = c.id_categorie WHERE id_produit = ?');
+        }
         $req->execute(array($produitId));
         $produit = new Produit($req->fetch());
-
         return $produit;
-    }
+    }// functions ends here
 
     public function getProduitCategorie($idCategorie)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('SELECT p.*, categorie FROM tbl_produit AS p INNER JOIN tbl_categorie AS c ON p.id_categorie = c.id_categorie WHERE c.id_categorie = ?');
+        // Creation de la requete en fonction de la langue
+        switch ($_SESSION['lang']) {
+            case "fr_CA":
+                $req = $db->prepare('SELECT p.id_produit, p.id_categorie, p.produit_fr, p.description_fr, c.categorie_fr FROM tbl_produit AS p INNER JOIN tbl_categorie AS c ON p.id_categorie = c.id_categorie WHERE c.id_categorie = ?');
+                break;
+            case "en_CA":
+                $req = $db->prepare('SELECT p.id_produit, p.id_categorie, p.produit_en, p.description_en, c.categorie_en FROM tbl_produit AS p INNER JOIN tbl_categorie AS c ON p.id_categorie = c.id_categorie WHERE c.id_categorie = ?');                break;
+            case "pt_BR":
+                $req = $db->prepare('SELECT p.id_produit, p.id_categorie, p.produit_pt, p.description_pt c.categorie_pt FROM tbl_produit AS p INNER JOIN tbl_categorie AS c ON p.id_categorie = c.id_categorie WHERE c.id_categorie = ?');
+                break;
+            default:
+                $req = $db->prepare('SELECT p.id_produit, p.id_categorie, p.produit_en, p.description_en, c.categorie_en FROM tbl_produit AS p INNER JOIN tbl_categorie AS c ON p.id_categorie = c.id_categorie WHERE c.id_categorie = ?');
+        }
         $req->execute(array($idCategorie));
 
         $produits = array();
-
         while ($data = $req->fetch()) {
             array_push($produits, new Produit($data));
         }
@@ -56,10 +92,24 @@ class ProduitManager extends Manager
      * $produit est le nom du produit
      * $description est la description du produit.
      */
-    public function add($id_categorie, $produit, $description)
+    public function add($id_categorie, $produit, $description) 
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('INSERT INTO tbl_produit(id_categorie, produit, description) VALUES (?,?,?)');
+        // Creation de la requete en fonction de la langue
+        switch ($_SESSION['lang'])
+        {
+            case "fr_CA":
+                $req = $db->prepare('INSERT INTO tbl_produit(id_categorie, produit_fr, description_fr) VALUES (?,?,?)');
+                break;
+            case "en_CA":
+                $req = $db->prepare('INSERT INTO tbl_produit(id_categorie, produit_en, description_en) VALUES (?,?,?)');
+                break;
+            case "pt_BR":
+                $req = $db->prepare('INSERT INTO tbl_produit(id_categorie, produit_pt, description_pt) VALUES (?,?,?)');                
+                break;
+            default:
+                $req = $db->prepare('INSERT INTO tbl_produit(id_categorie, produit_en, description_en) VALUES (?,?,?)');        
+        }
         $req->execute(array($id_categorie, $produit, $description));
         $req->closeCursor();
     }
@@ -75,4 +125,5 @@ class ProduitManager extends Manager
         $req->execute(array($id_produit));
         $req->closeCursor();
     }
-}
+
+} // class ends here

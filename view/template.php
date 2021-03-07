@@ -13,17 +13,20 @@
 <body>
     <nav>
         <ul>
-            <li><a href="index.php">Accueil</a></li>
-            <li><a href="produits">Les produits</a></li>
+            <li><a href="index.php"><?php echo _('Accueil')?></a></li>
+            <li><a href="produits"><?php echo _('Les produits')?></a></li>
             <?php
-            if (isset($_SESSION['courriel'])) {
+            if (isset($_SESSION['courriel']))
                 echo '<a href="index.php?action=logout" onclick="signOut();">Sign out</a>';
-            } else {
-                echo '<li><a href="inscription">Inscription</a></li>';
-                echo '<li><a href="connexion">Connexion</a></li>';
+            else 
+            {
+                echo '<li><a href="inscription">' . _('Inscription') . '</a></li>';
+                echo '<li><a href="connexion">' . _('Connexion') . '</a></li>';
             }
-
             ?>
+            <li><a href="./index.php?lang=fr_CA"><?php echo _('Francais') ?></a></li>
+            <li><a href="./index.php?lang=en_US"><?php echo _('Anglais') ?></a></li>
+            <li><a href="./index.php?lang=pt_BR"><?php echo _('Português') ?></a></li>
         </ul>
     </nav>
     <?= $content ?>

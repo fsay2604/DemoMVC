@@ -1,0 +1,130 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: DemoMVC_EN\n"
+"POT-Creation-Date: 2021-02-25 14:22-0500\n"
+"PO-Revision-Date: 2021-02-25 14:27-0500\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en_CA\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4.2\n"
+"X-Poedit-Basepath: ../../..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: lib/gettext/examples/pigs_dropin.php:77
+msgid ""
+"This is how the story goes.\n"
+"\n"
+msgstr ""
+
+#: view/accueilView.php:8
+msgid "Démonstration du modèle MVC"
+msgstr "Demo of the MVC model"
+
+#: view/accueilView.php:9
+msgid "Liste des produits sur la page d'accueil"
+msgstr "List of all the products on the home page"
+
+#: view/accueilView.php:18
+msgid "Voir les détails"
+msgstr "See details"
+
+#: view/categoriesView.php:8
+msgid "Categorie:"
+msgstr "Category:"
+
+#: view/categoriesView.php:9 view/produitView.php:8 view/produitsView.php:28
+#: view/produitsView.php:37
+msgid "Description:"
+msgstr "Description:"
+
+#: view/categoriesView.php:11
+msgid "Voir les produits"
+msgstr "See products"
+
+#: view/inscriptionView.php:9
+msgid "Nom : "
+msgstr "Last name:"
+
+#: view/inscriptionView.php:10
+msgid "Prenom :"
+msgstr "First name:"
+
+#: view/inscriptionView.php:11
+msgid "Courriel :"
+msgstr "E-mail:"
+
+#: view/inscriptionView.php:12
+msgid "Mot de passe :"
+msgstr "Password:"
+
+#: view/inscriptionView.php:15
+msgid "S'inscrire"
+msgstr "Register"
+
+#: view/loginView.php:14
+msgid "Courriel:"
+msgstr "E-mail:"
+
+#: view/loginView.php:16
+msgid "Mot de passe:"
+msgstr "Password:"
+
+#: view/loginView.php:18
+msgid "Se souvenir de moi"
+msgstr "Remember me"
+
+#: view/loginView.php:21
+msgid "Se connecter"
+msgstr "Connect"
+
+#: view/produitsView.php:7
+msgid "de categorie"
+msgstr "of category "
+
+#: view/produitsView.php:20
+msgid "Gestion des produits:"
+msgstr "Product management:"
+
+#: view/produitsView.php:21 view/produitsView.php:36
+msgid "Produit:"
+msgstr "Product:"
+
+#: view/produitsView.php:22
+msgid "Catégorie:"
+msgstr "Category:"
+
+#: view/produitsView.php:29
+msgid "Ajouter"
+msgstr "Add"
+
+#: view/template.php:16
+msgid "Accueil"
+msgstr "Home"
+
+#: view/template.php:17
+msgid "Les produits"
+msgstr "Products"
+
+#: view/template.php:23
+msgid "Inscription"
+msgstr "Register"
+
+#: view/template.php:24
+msgid "Connexion"
+msgstr "Log in"
+
+#: view/template.php:27
+msgid "Francais"
+msgstr "French"
+
+#: view/template.php:28
+msgid "Anglais"
+msgstr "English"
+
+#: view/template.php:29
+msgid "Português"
+msgstr "Portuguese"
