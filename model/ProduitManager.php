@@ -15,16 +15,16 @@ class ProduitManager extends Manager
         switch($_SESSION['lang'])
         {
             case "fr_CA":
-                $req = $db->prepare('SELECT id_produit, id_categorie, produit_fr, description_fr FROM tbl_produit ORDER BY id_produit');
+                $req = $db->prepare('SELECT id_produit, id_categorie, produit_fr, description_fr, prix FROM tbl_produit ORDER BY id_produit');
                 break;
             case "en_CA":
-                $req = $db->prepare('SELECT id_produit, id_categorie, produit_en, description_en FROM tbl_produit ORDER BY id_produit');
+                $req = $db->prepare('SELECT id_produit, id_categorie, produit_en, description_en, prix FROM tbl_produit ORDER BY id_produit');
                 break;
             case "pt_BR":
-                $req = $db->prepare('SELECT id_produit, id_categorie, produit_pt, description_pt FROM tbl_produit ORDER BY id_produit');
+                $req = $db->prepare('SELECT id_produit, id_categorie, produit_pt, description_pt, prix FROM tbl_produit ORDER BY id_produit');
                 break;
             default:
-                $req = $db->prepare('SELECT id_produit, id_categorie, produit_en, description_en FROM tbl_produit ORDER BY id_produit');
+                $req = $db->prepare('SELECT id_produit, id_categorie, produit_en, description_en, prix FROM tbl_produit ORDER BY id_produit');
         }
         $req->execute(array());
 
@@ -43,16 +43,16 @@ class ProduitManager extends Manager
         // Creation de la requete en fonction de la langue
         switch ($_SESSION['lang']) {
             case "fr_CA":
-                $req = $db->prepare('SELECT p.id_produit, p.id_categorie, p.produit_fr, p.description_fr, c.categorie_fr FROM tbl_produit AS p INNER JOIN tbl_categorie AS c ON p.id_categorie = c.id_categorie WHERE id_produit = ?');
+                $req = $db->prepare('SELECT p.id_produit, p.id_categorie, p.produit_fr, p.description_fr, c.categorie_fr, p.prix FROM tbl_produit AS p INNER JOIN tbl_categorie AS c ON p.id_categorie = c.id_categorie WHERE id_produit = ?');
                 break;
             case "en_CA":
-                $req = $db->prepare('SELECT p.id_produit, p.id_categorie, p.produit_en, p.description_en, c.categorie_en FROM tbl_produit AS p INNER JOIN tbl_categorie AS c ON p.id_categorie = c.id_categorie WHERE id_produit = ?');
+                $req = $db->prepare('SELECT p.id_produit, p.id_categorie, p.produit_en, p.description_en, c.categorie_en, p.prix FROM tbl_produit AS p INNER JOIN tbl_categorie AS c ON p.id_categorie = c.id_categorie WHERE id_produit = ?');
                 break;
             case "pt_BR":
-                $req = $db->prepare('SELECT p.id_produit, p.id_categorie, p.produit_pt, p.description_pt, c.categorie_pt FROM tbl_produit AS p INNER JOIN tbl_categorie AS c ON p.id_categorie = c.id_categorie WHERE id_produit = ?');
+                $req = $db->prepare('SELECT p.id_produit, p.id_categorie, p.produit_pt, p.description_pt, c.categorie_pt, p.prix FROM tbl_produit AS p INNER JOIN tbl_categorie AS c ON p.id_categorie = c.id_categorie WHERE id_produit = ?');
                 break;
             default:
-                $req = $db->prepare('SELECT p.id_produit, p.id_categorie, p.produit_en, p.description_en, c.categorie_en FROM tbl_produit AS p INNER JOIN tbl_categorie AS c ON p.id_categorie = c.id_categorie WHERE id_produit = ?');
+                $req = $db->prepare('SELECT p.id_produit, p.id_categorie, p.produit_en, p.description_en, c.categorie_en, p.prix FROM tbl_produit AS p INNER JOIN tbl_categorie AS c ON p.id_categorie = c.id_categorie WHERE id_produit = ?');
         }
         $req->execute(array($produitId));
         $produit = new Produit($req->fetch());
@@ -92,25 +92,30 @@ class ProduitManager extends Manager
      * $produit est le nom du produit
      * $description est la description du produit.
      */
-    public function add($id_categorie, $produit, $description) 
+
+     /**
+      * TO DO: Ajouter un prix, donc ajouter un formulaire au champs du formulaire aussi.
+      */
+
+    public function add($id_categorie, $produit, $description, $prix) 
     {
         $db = $this->dbConnect();
         // Creation de la requete en fonction de la langue
         switch ($_SESSION['lang'])
         {
             case "fr_CA":
-                $req = $db->prepare('INSERT INTO tbl_produit(id_categorie, produit_fr, description_fr) VALUES (?,?,?)');
+                $req = $db->prepare('INSERT INTO tbl_produit(id_categorie, produit_fr, description_fr, prix) VALUES (?,?,?,?)');
                 break;
             case "en_CA":
-                $req = $db->prepare('INSERT INTO tbl_produit(id_categorie, produit_en, description_en) VALUES (?,?,?)');
+                $req = $db->prepare('INSERT INTO tbl_produit(id_categorie, produit_en, description_en, prix) VALUES (?,?,?,?)');
                 break;
             case "pt_BR":
-                $req = $db->prepare('INSERT INTO tbl_produit(id_categorie, produit_pt, description_pt) VALUES (?,?,?)');                
+                $req = $db->prepare('INSERT INTO tbl_produit(id_categorie, produit_pt, description_pt, prix) VALUES (?,?,?,?)');                
                 break;
             default:
-                $req = $db->prepare('INSERT INTO tbl_produit(id_categorie, produit_en, description_en) VALUES (?,?,?)');        
+                $req = $db->prepare('INSERT INTO tbl_produit(id_categorie, produit_en, description_en, prix) VALUES (?,?,?,?)');        
         }
-        $req->execute(array($id_categorie, $produit, $description));
+        $req->execute(array($id_categorie, $produit, $description, $prix));
         $req->closeCursor();
     }
 

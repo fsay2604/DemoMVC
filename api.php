@@ -21,13 +21,13 @@ if (isset($_REQUEST['objet']))
                     if(isset($_REQUEST['id']) && $_REQUEST['id'] > 0)
                     {
                         require_once('controller/controllerProduit.php');
-                        $produit = produit(true);
+                        $produit = produit(false);
                         echo json_encode($produit, JSON_PRETTY_PRINT);
                     }
                     else  // Sinon, on envoit une liste de tout les produits.
                     {
                         require_once('controller/controllerProduit.php');
-                        $productList = listProduits(true);
+                        $productList = listProduits(0);
                         echo json_encode($productList, JSON_PRETTY_PRINT);
                     }
                     break;

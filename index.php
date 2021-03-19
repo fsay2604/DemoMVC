@@ -1,7 +1,9 @@
-
-
 <?php
 session_start();
+echo '<pre>';
+print_r($_REQUEST);
+echo '</pre>';
+
 // Gestion de la langues
 if (isset($_REQUEST['lang'])) {
     switch ($_REQUEST['lang']) {
@@ -163,14 +165,51 @@ if (isset($_REQUEST['action']))                                        //  Est-c
             echo ' Token not set.';
     } else if ($_REQUEST['action'] == 'AjoutProduit')                     // Si on appuie sur l'image d'ajout d'un produit
     {
-        echo "!!!!!!";
         require('controller/controllerProduit.php');
-        addProduit($_REQUEST['categorie'], $_REQUEST['produit'], $_REQUEST['description']);
+        addProduit($_REQUEST['categorie'], $_REQUEST['produit'], $_REQUEST['description'], $_REQUEST['prix']);
     } else if ($_REQUEST['action'] == 'DeleteProduit')                    // Si on appuie sur l'image de suppression d'un produit
     {
         require('controller/controllerProduit.php');
         deleteProduit($_REQUEST['id_produit']);
     }
+    // Quand ont veut faire une commande d'achat
+    else if ($_REQUEST['action'] == 'achatProduit')                    // Si on appuie sur l'image de suppression d'un produit
+    {
+        require('controller/controllerProduit.php');
+        listProduits(2);
+    }
+    // Quand ont veut faire une commande d'achat
+    else if ($_REQUEST['action'] == 'AddOrderToDB')                    // Si on appuie sur l'image de suppression d'un produit
+    {
+        require('controller/controllerCommande.php');
+        // Commande
+        if(isset($_SESSION['courriel']))
+        {
+            $status = 0;
+            $date_achat = explode("T", $_REQUEST['date_achat'])[0];    // on ne prend que YYYY-MM-DD
+            $id_transaction_paypal = strval($_REQUEST['id_transaction_paypal']); // strval pour mettre la valeur en string.
+
+            // Insert dans un premier temps les informations de la commande (sauf ceux du webhook)
+            addCommandeToDatabase($_SESSION['courriel'], $status, $date_achat, $id_transaction_paypal);
+        
+            // Ajout dans la table_commande_produit chacun des produits
+            $ItemsStringToExplode = $_REQUEST['items'];
+            $RetrievedItems = explode("/", $ItemsStringToExplode); // renvoit chacun des items
+            $items = []; // Contiendra l'ensemble des items
+
+            for($i = 0; $i < count($RetrievedItems); $i++)
+                $items[$i] = explode(";", $RetrievedItems[$i]); // renvoit chacun des elements d<un items.
+
+            for($i =0; $i < count($items)-1; $i++)
+            {
+                $id_produit = intval(explode("=", $items[$i][0])[1]);
+                $prix_unitaire = floatval(explode("=", $items[$i][1])[1]);
+                $quantite = intval(explode("=", $items[$i][2])[1]);
+                addCommandeProduitToDatabase($id_transaction_paypal, $id_produit, $quantite, $prix_unitaire);
+            }
+        }
+    }
+    
 } else                                                                   // Si pas de paramètre charge l'accueil
 {
     require('controller/controllerAccueil.php');
